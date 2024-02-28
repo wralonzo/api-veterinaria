@@ -1,0 +1,41 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "develop",
+            "type": "node-terminal",
+            "request": "launch",
+            "command": "npm run start:dev",
+            "console": "integratedTerminal",
+            "serverReadyAction": {
+                "pattern": "started server on .+, url: (https?://.+)",
+                "uriFormat": "%s",
+                "action": "debugWithChrome"
+            }
+        },
+        {
+            "name": "local",
+            "type": "node-terminal",
+            "request": "launch",
+            "command": "npm run start:local",
+            "console": "integratedTerminal",
+            "serverReadyAction": {
+                "pattern": "started server on .+, url: (https?://.+)",
+                "uriFormat": "%s",
+                "action": "debugWithChrome"
+            }
+        },
+        {
+            "name": "prod",
+            "type": "node-terminal",
+            "request": "launch",
+            "command": "npm run start:prod",
+            "console": "integratedTerminal",
+            "serverReadyAction": {
+                "pattern": "started server on .+, url: (https?://.+)",
+                "uriFormat": "%s",
+                "action": "debugWithChrome"
+            }
+        }
+    ]
+}

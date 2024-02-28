@@ -1,0 +1,49 @@
+import { EnumState } from '@/shared/enum/state.enum';
+import {
+  Column,
+  CreateDateColumn,
+  DeleteDateColumn,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+import { Pet } from './pet.entity';
+import { User } from './user.entity';
+
+@Entity()
+export class VaccinePet {
+  @PrimaryGeneratedColumn({ type: 'integer', name: 'id' })
+  id: number;
+
+  @Column('int', { name: 'pet' })
+  idPet: number;
+
+  @Column('int', { name: 'vaccine' })
+  idVaccine: number;
+
+  @Column('double', { name: 'dose' })
+  dose: number;
+
+  @Column({ name: 'state', length: 10 })
+  state: EnumState;
+
+  @Column('int', { name: 'user_register' })
+  idUserRegister: number;
+
+  @CreateDateColumn({ type: 'datetime',   })
+  dateCreated: Date;
+
+  @DeleteDateColumn()
+  deletedAt?: Date;
+
+  @ManyToOne(() => Pet, (pet) => pet.vaccinePetFk, { onDelete: 'CASCADE' })
+  @JoinColumn([{ name: 'vaccine', referencedColumnName: 'id' }])
+  vaccinePetFk: Pet;
+
+  @ManyToOne(() => User, (user) => user.vaccinePetRegisterFk, {
+    onDelete: 'CASCADE',
+  })
+  @JoinColumn([{ name: 'user_register', referencedColumnName: 'id' }])
+  vaccinePetRegisterFk: User;
+}
