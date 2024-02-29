@@ -24,7 +24,16 @@ export class ClientService {
         body.client.idUser = user.id;
         const client = await this.repository.save(body.client);
         if (client) {
-          return user;
+          return {
+            id: client.id,
+            address: client.address,
+            name: user.name,
+            surname: user.surname,
+            user: user.user,
+            email: user.email,
+            mobile: user.mobile,
+            passwordGenerate: user.passwordGenerate
+          };
         }
         throw new HttpException(
           'Error al guardar el cliente',
@@ -52,6 +61,9 @@ export class ClientService {
             typeUser: EnumTypeUser.CLIENT,
           },
         },
+        order:{
+          dateCreated: 'DESC'
+        }
       });
 
       const data = request.map((client) => {
@@ -75,8 +87,13 @@ export class ClientService {
 
   public async findOne(id: number) {
     try {
-      const request = await this.repository.findOneBy({
-        id: id,
+      const request = await this.repository.findOne({
+        relations:{
+          clientFk: true
+        },
+        where: {
+          id: id,
+        }
       });
 
       return {
@@ -110,8 +127,13 @@ export class ClientService {
             email: updateClientDto.user.email,
             id: client.idUser,
             typeUser: updateClientDto.user.typeUser,
+            mobile: updateClientDto.user.mobile,
+            surname: updateClientDto.user.surname,
           };
           const updateUser = await this.serviceUser.update(user);
+          if(updateUser){
+            return client;
+          }
         }
         throw new HttpException(
           `No se actualizo el cliente`,
@@ -127,6 +149,7 @@ export class ClientService {
   public async remove(id: number) {
     try {
       const deleteClient = await this.repository.softDelete({ id: id });
+      console.log(deleteClient);
       if (deleteClient.affected > 0) {
         return true;
       }

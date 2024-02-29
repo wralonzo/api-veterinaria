@@ -19,36 +19,30 @@ import { EnumTypeUser } from '@/shared/enum/type-user.enum';
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
+  @UseGuards(JwtAuthGuard)
   @Post()
-  // @UseGuards(JwtAuthGuard)
   private async create(@Body() body: CreateUserDto) {
     try {
-      const data = await this.userService.create(body);
-      const response = data;
-      return response;
+      return await this.userService.create(body);
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('/all/')
+  private async findAll(@Param('id') typeUser: EnumTypeUser) {
+    try {
+      return await this.userService.findAll(typeUser);
     } catch (error) {
       throw error;
     }
   }
 
   @Get('/:id')
-  @UseGuards(JwtAuthGuard)
-  private async findAll(@Param('id') typeUser: EnumTypeUser) {
-    try {
-      const data = await this.userService.findAll(typeUser);
-      const response = data;
-      return response;
-    } catch (error) {
-      throw error;
-    }
-  }
-
-  @Get(':id')
   private async findOne(@Param('id') id: string) {
     try {
-      const data = await this.userService.findOne(+id);
-      const response = data;
-      return response;
+      return await this.userService.findOne(+id);
     } catch (error) {
       throw error;
     }
@@ -58,9 +52,7 @@ export class UserController {
   @UseGuards(JwtAuthGuard)
   private async update(@Body() body: UpdateUserDto) {
     try {
-      const data = await this.userService.update(body);
-      const response = data;
-      return response;
+      return await this.userService.update(body);
     } catch (error) {
       throw error;
     }
@@ -70,9 +62,7 @@ export class UserController {
   @UseGuards(JwtAuthGuard)
   private async remove(@Param('id') id: string) {
     try {
-      const data = await this.userService.remove(+id);
-      const response = data;
-      return response;
+      return await this.userService.remove(+id);
     } catch (error) {
       throw error;
     }

@@ -7,6 +7,6 @@ import { VaccineModule } from './vaccine/vaccine.module';
 import { ServicePetModule } from './service-pet/service-pet.module';
 
 @Module({
-  imports: [AuthModule, UserModule, ClientModule, PetModule, VaccineModule, ServicePetModule],
+  imports: [ClientModule, PetModule, VaccineModule, ServicePetModule],
 })
-export class ApiModule {}
+export class ApiModule { }

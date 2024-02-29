@@ -30,7 +30,6 @@ export class ClientController {
   @Get()
   private async findAll() {
     try {
-      console.log('hola cliente');
       return await this.clientService.findAll();
     } catch (error) {
       throw error;

@@ -1,0 +1,15 @@
+version: '3'
+
+services:  
+  veterinaria-api:
+    container_name: veterinaria-api
+    restart: always
+    image: node:18
+    volumes:
+      - ./:/app/
+    working_dir: /app
+    command: bash -c 'yarn start:local'
+    ports:
+      - '3000:3000'
+    expose:
+      - 3000

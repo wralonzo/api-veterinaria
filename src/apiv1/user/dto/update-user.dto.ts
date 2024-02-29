@@ -13,26 +13,30 @@ export class UpdateUserDto {
   @IsString()
   @IsOptional()
   @Transform((param) => param.value.toUpperCase())
-  public name: string;
+  public name?: string;
 
   @IsString()
-  @IsNotEmpty()
+  @IsOptional()
   @Transform((param) => param.value.toUpperCase())
   public surname?: string;
 
   @IsString()
-  @IsNotEmpty()
+  @IsOptional()
+  public mobile?: string;
+
+  @IsString()
+  @IsOptional()
   public password?: string;
 
   @IsString()
   @IsOptional()
-  public email: string;
+  public email?: string;
 
   @IsNumber()
   @IsPositive()
-  @IsNotEmpty()
+  @IsOptional()
   public id: number;
 
   @IsOptional()
-  public typeUser: EnumTypeUser;
+  public typeUser?: EnumTypeUser;
 }

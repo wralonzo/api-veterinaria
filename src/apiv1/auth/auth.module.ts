@@ -13,7 +13,7 @@ import { User } from '@/typeorm/entities/user.entity';
   controllers: [AuthController],
   imports: [
     TypeOrmModule.forFeature([User]),
-    PassportModule.register({ defaultStrategy: 'jwt', property: 'User' }),
+    PassportModule.register({ defaultStrategy: 'jwt', property: 'user' }),
     JwtModule.registerAsync({
       inject: [ConfigService],
       useFactory: (config: ConfigService) => ({

@@ -38,6 +38,7 @@ export class AuthService {
           },
           roleUserFk: {
             userRoleFk: true,
+            appRoleFk: true,
           },
         },
         where: {
@@ -84,7 +85,7 @@ export class AuthService {
               route: item.userAppFk.route,
             };
           }),
-          rols: user.roleUserFk.map((item) => item.userRoleFk.key),
+          rols: user.roleUserFk.map((item) => `${item.userRoleFk.key}_${item.appRoleFk.route}`),
         };
       }
     } catch (error) {

@@ -10,7 +10,7 @@ import { AuthHelper } from '../auth/utils/auth.helper';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Not, Repository } from 'typeorm';
 import { User } from '../../typeorm/entities/user.entity';
 import { EnumState } from '../../shared/enum/state.enum';
 import { EnumTypeUser } from '@/shared/enum/type-user.enum';
@@ -20,14 +20,14 @@ export class UserService {
   constructor(
     @InjectRepository(User)
     private readonly repository: Repository<User>,
-  ) {}
+  ) { }
 
   @Inject(AuthHelper)
   private readonly helper: AuthHelper;
 
   public async create(
     body: CreateUserDto,
-  ): Promise<{ user: string; password: string; id: number }> {
+  ): Promise<User> {
     try {
       const generateUserPass = this.generateUser(body.name, body.surname);
       const userExist = await this.repository.findOne({
@@ -43,11 +43,7 @@ export class UserService {
 
         const newUser = await this.repository.save(body);
         if (newUser) {
-          return {
-            user: newUser.user,
-            password: generateUserPass.password,
-            id: newUser.id,
-          };
+          return newUser;
         }
         throw new HttpException(
           'Error al guardar el usuario',
@@ -71,39 +67,41 @@ export class UserService {
             userAppFk: true,
           },
           roleUserFk: {
-            roleUserFk: true,
+            userRoleFk: true,
+            appRoleFk: true
           },
         },
         where: {
           state: EnumState.ACTIVE,
-          typeUser: EnumTypeUser.ADMIN,
+          typeUser: Not(EnumTypeUser.CLIENT),
         },
       });
       if (users.length > 0) {
         return users.map((user) => {
-          const RETURN_FORMAT = {
+          return {
             idUser: user.id,
             name: user.name,
             surname: user.surname,
             user: user.user,
             email: user.email,
+            mobile: user.mobile,
             passwordGenerate: user.passwordGenerate,
+            type: user.typeUser,
             apps: user.appUserFk.map((item) => {
               return {
-                id: item.userAppFk.id,
+                id: item.id,
                 name: item.userAppFk.name,
                 route: item.userAppFk.route,
               };
             }),
             rols: user.roleUserFk.map((item) => {
               return {
-                id: item.roleUserFk.id,
+                id: item.id,
                 name: item.userRoleFk.name,
-                route: item.userRoleFk.key,
+                key: `${item.userRoleFk.key}_${item.appRoleFk.route}`,
               };
             }),
           };
-          return RETURN_FORMAT;
         });
       }
       return [];
@@ -148,7 +146,7 @@ export class UserService {
             return {
               id: item.roleUserFk.id,
               name: item.userRoleFk.name,
-              route: item.userRoleFk.key,
+              key: `${item.userRoleFk.key}_${item.appRoleFk.route}`,
             };
           }),
         };

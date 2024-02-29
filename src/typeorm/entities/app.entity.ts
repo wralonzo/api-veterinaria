@@ -11,6 +11,7 @@ import {
 } from 'typeorm';
 import { User } from './user.entity';
 import { AppUser } from './app-user-entity';
+import { RoleUser } from './role-user-entity';
 
 @Entity()
 export class App {
@@ -36,4 +37,7 @@ export class App {
   
   @OneToMany(() => AppUser, (app) => app.userAppFk)
   appUserFk: AppUser[];
+
+  @OneToMany(() => RoleUser, (roleUser) => roleUser.appRoleFk)
+  appRoleFk: RoleUser[];
 }

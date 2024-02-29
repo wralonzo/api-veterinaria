@@ -8,6 +8,7 @@ import {
 } from 'typeorm';
 import { User } from './user.entity';
 import { Role } from './role.entity';
+import { App } from './app.entity';
 
 @Entity()
 export class RoleUser {
@@ -19,6 +20,10 @@ export class RoleUser {
 
   @Column('int', { name: 'role' })
   idRole: number;
+
+
+  @Column('int', { name: 'app' })
+  idApp: number;
 
   @Column({
     name: 'state',
@@ -35,4 +40,8 @@ export class RoleUser {
   @ManyToOne(() => Role, (role) => role.userRoleFk, { onDelete: 'CASCADE' })
   @JoinColumn([{ name: 'role', referencedColumnName: 'id' }])
   userRoleFk: Role;
+
+  @ManyToOne(() => App, (app) => app.appRoleFk, { onDelete: 'CASCADE' })
+  @JoinColumn([{ name: 'app', referencedColumnName: 'id' }])
+  appRoleFk: App;
 }
