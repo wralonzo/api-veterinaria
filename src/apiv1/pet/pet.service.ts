@@ -79,4 +79,25 @@ export class PetService {
       throw error;
     }
   }
+
+  public async findClient(idClient: number) {
+    try {
+      const pet = await this.repository.find({
+        relations: {
+          serivicePetFk: true,
+          vaccinePetFk: true,
+          consultsFk: true,
+        },
+        where: {
+          client: idClient,
+        },
+      });
+      if (pet.length > 0) {
+        return pet;
+      }
+      throw new HttpException('No se encontro la mascota', HttpStatus.CONFLICT);
+    } catch (error) {
+      throw error;
+    }
+  }
 }

@@ -13,6 +13,7 @@ import { Consult } from './consult.entity';
 import { ServicePet } from './service-pet';
 import { VaccinePet } from './vaccine-pet';
 import { Client } from './client.entity';
+import { EnumTypePet } from '@/shared/enum/type-pet.enum';
 
 @Entity()
 export class Pet {
@@ -25,8 +26,12 @@ export class Pet {
   @Column('int', { name: 'age' })
   age: number;
 
-  @Column('varchar', { name: 'gender', length: 10 })
-  gender: 'Macho' | 'Hembra';
+  @Column({
+    name: 'gender',
+    type: 'enum',
+    enum: EnumTypePet,
+  })
+  gender: EnumTypePet;
 
   @Column('int', { name: 'client' })
   client: number;

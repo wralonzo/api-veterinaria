@@ -13,7 +13,10 @@ import { CreatePetDto } from './dto/create-pet.dto';
 import { UpdatePetDto } from './dto/update-pet.dto';
 import { JwtAuthGuard } from '../auth/utils/jwt-auth.guard';
 
-@Controller('pet')
+@Controller({
+  path: 'pet',
+  version: '1',
+})
 export class PetController {
   constructor(private readonly petService: PetService) {}
 
@@ -65,6 +68,16 @@ export class PetController {
   private async remove(@Param('id') id: string) {
     try {
       return this.petService.remove(+id);
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('client/:id')
+  private async findClient(@Param('id') id: string) {
+    try {
+      return this.petService.findClient(+id);
     } catch (error) {
       throw error;
     }
