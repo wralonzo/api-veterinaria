@@ -2,6 +2,7 @@ import { EnumState } from '@/shared/enum/state.enum';
 import {
   Column,
   CreateDateColumn,
+  DeleteDateColumn,
   Entity,
   JoinColumn,
   ManyToOne,
@@ -52,6 +53,9 @@ export class Pet {
 
   @CreateDateColumn({ type: 'datetime' })
   dateCreated: Date;
+
+  @DeleteDateColumn()
+  deletedAt?: Date;
 
   @ManyToOne(() => User, (user) => user.petFk, { onDelete: 'CASCADE' })
   @JoinColumn([{ name: 'user', referencedColumnName: 'id' }])
