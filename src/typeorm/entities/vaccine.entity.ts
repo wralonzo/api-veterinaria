@@ -9,7 +9,7 @@ import {
 @Entity()
 export class Vaccine {
   @PrimaryGeneratedColumn({ type: 'integer', name: 'id' })
-  id: string;
+  id: number;
 
   @Column('varchar', { name: 'name', length: 50 })
   name: string;

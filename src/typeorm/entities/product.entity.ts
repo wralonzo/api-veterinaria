@@ -11,7 +11,7 @@ import { ServicePet } from './service-pet';
 @Entity()
 export class Product {
   @PrimaryGeneratedColumn({ type: 'integer', name: 'id' })
-  id: string;
+  id: number;
 
   @Column('varchar', { name: 'name', length: 50 })
   name: string;

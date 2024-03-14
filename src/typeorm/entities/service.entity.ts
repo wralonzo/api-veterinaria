@@ -9,7 +9,7 @@ import {
 @Entity()
 export class Service {
   @PrimaryGeneratedColumn({ type: 'integer', name: 'id' })
-  id: string;
+  id: number;
 
   @Column('varchar', { name: 'name', length: 50 })
   name: string;
@@ -25,6 +25,6 @@ export class Service {
   })
   state: EnumState;
 
-  @CreateDateColumn({ type: 'datetime',   })
+  @CreateDateColumn({ type: 'datetime' })
   dateCreated: Date;
 }

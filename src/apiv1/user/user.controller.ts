@@ -19,7 +19,7 @@ import { EnumTypeUser } from '@/shared/enum/type-user.enum';
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  @UseGuards(JwtAuthGuard)
+  // @UseGuards(JwtAuthGuard)
   @Post()
   private async create(@Body() body: CreateUserDto) {
     try {

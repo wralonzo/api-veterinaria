@@ -13,7 +13,7 @@ import { RoleUser } from './role-user-entity';
 @Entity()
 export class Role {
   @PrimaryGeneratedColumn({ type: 'integer', name: 'id' })
-  id: string;
+  id: number;
 
   @Column('varchar', { name: 'name', length: 50 })
   name: string;
