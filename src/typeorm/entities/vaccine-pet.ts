@@ -10,6 +10,7 @@ import {
 } from 'typeorm';
 import { Pet } from './pet.entity';
 import { User } from './user.entity';
+import { Vaccine } from './vaccine.entity';
 
 @Entity()
 export class VaccinePet {
@@ -38,8 +39,12 @@ export class VaccinePet {
   deletedAt?: Date;
 
   @ManyToOne(() => Pet, (pet) => pet.vaccinePetFk, { onDelete: 'CASCADE' })
-  @JoinColumn([{ name: 'vaccine', referencedColumnName: 'id' }])
+  @JoinColumn([{ name: 'pet', referencedColumnName: 'id' }])
   vaccinePetFk: Pet;
+
+  @ManyToOne(() => Vaccine, (vaccine) => vaccine.vaccineFk, { onDelete: 'CASCADE' })
+  @JoinColumn([{ name: 'vaccine', referencedColumnName: 'id' }])
+  vaccineFk: Vaccine;
 
   @ManyToOne(() => User, (user) => user.vaccinePetRegisterFk, {
     onDelete: 'CASCADE',

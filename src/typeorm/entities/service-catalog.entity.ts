@@ -3,11 +3,13 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import { ServicePet } from './service-pet';
 
-@Entity()
-export class Service {
+@Entity({name: 'service'})
+export class ServiceCatalog {
   @PrimaryGeneratedColumn({ type: 'integer', name: 'id' })
   id: number;
 
@@ -27,4 +29,7 @@ export class Service {
 
   @CreateDateColumn({ type: 'datetime' })
   dateCreated: Date;
+
+  @OneToMany(() => ServicePet, (serivicePet) => serivicePet.serviceFK)
+  productFk: ServicePet[];
 }

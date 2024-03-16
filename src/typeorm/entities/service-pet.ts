@@ -2,6 +2,7 @@ import { EnumState } from '@/shared/enum/state.enum';
 import {
   Column,
   CreateDateColumn,
+  DeleteDateColumn,
   Entity,
   JoinColumn,
   ManyToOne,
@@ -10,26 +11,24 @@ import {
 import { User } from './user.entity';
 import { Pet } from './pet.entity';
 import { Product } from './product.entity';
+import { ServiceCatalog } from './service-catalog.entity';
 
 @Entity()
 export class ServicePet {
   @PrimaryGeneratedColumn({ type: 'integer', name: 'id' })
   id: number;
 
-  @Column('varchar', { name: 'name', length: 50 })
+  @Column('varchar', { name: 'name', length: 200 })
   name: string;
 
-  @Column('varchar', { name: 'route', length: 50 })
+  @Column('varchar', { name: 'route', length: 50, nullable: true })
   route: string;
 
   @Column('int', { name: 'pet' })
   idPet: number;
 
-  @Column('int', { name: 'product' })
-  idProduct: number;
-
-  @Column('double', { name: 'dose' })
-  dose: number;
+  @Column('double', { name: 'time' })
+  time: number;
 
   @Column({
     name: 'state',
@@ -42,16 +41,24 @@ export class ServicePet {
   @Column('int', { name: 'user_register' })
   idUserRegister: number;
 
-  @CreateDateColumn({ type: 'datetime',   })
+  @Column('int', { name: 'id_service' })
+  idService: number;
+
+  @CreateDateColumn({ type: 'datetime' })
   dateCreated: Date;
+
+  @DeleteDateColumn()
+  deletedAt?: Date;
 
   @ManyToOne(() => Pet, (pet) => pet.serivicePetFk, { onDelete: 'CASCADE' })
   @JoinColumn([{ name: 'pet', referencedColumnName: 'id' }])
   serivicePetFk: Pet;
 
-  @ManyToOne(() => Product, (pet) => pet.productFk, { onDelete: 'CASCADE' })
-  @JoinColumn([{ name: 'product', referencedColumnName: 'id' }])
-  productFk: Product;
+  @ManyToOne(() => ServiceCatalog, (pet) => pet.productFk, {
+    onDelete: 'CASCADE',
+  })
+  @JoinColumn([{ name: 'id_service', referencedColumnName: 'id' }])
+  serviceFK: ServiceCatalog;
 
   @ManyToOne(() => User, (user) => user.serviceRegisterFk, {
     onDelete: 'CASCADE',

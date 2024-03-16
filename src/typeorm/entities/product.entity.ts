@@ -38,7 +38,4 @@ export class Product {
 
   @CreateDateColumn({ type: 'datetime',   })
   dateCreated: Date;
-
-  @OneToMany(() => ServicePet, (serivicePet) => serivicePet.productFk)
-  productFk: ServicePet[];
 }

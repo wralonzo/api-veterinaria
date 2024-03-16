@@ -2,9 +2,12 @@ import { EnumState } from '@/shared/enum/state.enum';
 import {
   Column,
   CreateDateColumn,
+  DeleteDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import { VaccinePet } from './vaccine-pet';
 
 @Entity()
 export class Vaccine {
@@ -32,4 +35,10 @@ export class Vaccine {
 
   @CreateDateColumn({ type: 'datetime' })
   dateCreated: Date;
+
+  @DeleteDateColumn()
+  deletedAt?: Date;
+
+  @OneToMany(() => VaccinePet, (vaccine) => vaccine.vaccineFk)
+  vaccineFk: VaccinePet[];
 }
