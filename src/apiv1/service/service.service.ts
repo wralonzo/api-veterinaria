@@ -65,15 +65,14 @@ export class ServiceService {
           time: item.time,
           idServicio: item.serviceFK.id,
           nameServicio: item.serviceFK.name,
-          idPet: item.serivicePetFk.id,
-          namePet: item.serivicePetFk.name,
+          idPet: item.idPet,
+          namePet: item.serivicePetFk ? item.serivicePetFk.name : '',
           idUser: item.serviceRegisterFk.id,
           nameUser:
             item.serviceRegisterFk.name + ' ' + item.serviceRegisterFk.surname,
           dateCreated: item.dateCreated,
         };
       });
-      return data;
     } catch (error) {
       throw error;
     }
