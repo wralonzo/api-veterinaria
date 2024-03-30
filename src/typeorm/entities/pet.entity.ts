@@ -15,6 +15,9 @@ import { ServicePet } from './service-pet';
 import { VaccinePet } from './vaccine-pet';
 import { Client } from './client.entity';
 import { EnumTypePet } from '@/shared/enum/type-pet.enum';
+import { Examen } from './examen.entity';
+import { Reservation } from './reservation.entity';
+import { Constancy } from './contancy.entity';
 
 @Entity()
 export class Pet {
@@ -73,4 +76,13 @@ export class Pet {
 
   @OneToMany(() => VaccinePet, (vaccinePet) => vaccinePet.vaccinePetFk)
   vaccinePetFk: VaccinePet[];
+
+  @OneToMany(() => Examen, (examen) => examen.examenFk)
+  examenFk: Examen[];
+
+  @OneToMany(() => Reservation, (reservation) => reservation.reservacionFk)
+  reservacionFk: Examen[];
+
+  @OneToMany(() => Constancy, (constancy) => constancy.constancyFk)
+  constancyFk: Examen[];
 }
