@@ -25,6 +25,9 @@ export class ConstancyService {
         relations: {
           constancyFk: true,
         },
+        order: {
+          createdAt: 'DESC'
+        }
       });
       return data.map((item) => {
         return {

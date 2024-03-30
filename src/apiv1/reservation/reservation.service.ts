@@ -33,6 +33,9 @@ export class ReservationService {
             },
           },
         },
+        order: {
+          createdAt: 'DESC',
+        },
       });
 
       return data.map((item) => {

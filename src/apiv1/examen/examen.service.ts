@@ -30,6 +30,9 @@ export class ExamenService {
             },
           },
         },
+        order: {
+          createdAt: 'DESC',
+        },
       });
       return data.map((item) => {
         return {

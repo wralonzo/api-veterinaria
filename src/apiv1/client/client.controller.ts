@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   UseGuards,
+  Query,
 } from '@nestjs/common';
 import { ClientService } from './client.service';
 import { CreateClientDto } from './dto/create-client.dto';
@@ -31,6 +32,16 @@ export class ClientController {
   private async findAll() {
     try {
       return await this.clientService.findAll();
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('/tracking')
+  private async tracking(@Query('idClient') idClient: string) {
+    try {
+      return await this.clientService.tracking(+idClient);
     } catch (error) {
       throw error;
     }

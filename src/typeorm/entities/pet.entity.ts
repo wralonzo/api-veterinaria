@@ -81,8 +81,8 @@ export class Pet {
   examenFk: Examen[];
 
   @OneToMany(() => Reservation, (reservation) => reservation.reservacionFk)
-  reservacionFk: Examen[];
+  reservacionFk: Reservation[];
 
   @OneToMany(() => Constancy, (constancy) => constancy.constancyFk)
-  constancyFk: Examen[];
+  constancyFk: Constancy[];
 }
