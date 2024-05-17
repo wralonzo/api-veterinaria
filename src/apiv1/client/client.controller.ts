@@ -39,9 +39,9 @@ export class ClientController {
 
   @UseGuards(JwtAuthGuard)
   @Get('/tracking')
-  private async tracking(@Query('idClient') idClient: string) {
+  private async tracking(@Query('idPet') idPet: string) {
     try {
-      return await this.clientService.tracking(+idClient);
+      return await this.clientService.tracking(+idPet);
     } catch (error) {
       throw error;
     }

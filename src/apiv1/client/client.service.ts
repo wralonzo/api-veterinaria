@@ -161,9 +161,9 @@ export class ClientService {
     }
   }
 
-  public async tracking(idClient: number) {
+  public async tracking(idPet: number) {
     try {
-      const data = await this.repositoryPet.find({
+      const data = await this.repositoryPet.findOne({
         relations: {
           consultsFk: true,
           serivicePetFk: {
@@ -174,12 +174,11 @@ export class ClientService {
           constancyFk: true,
         },
         where: {
-          client: idClient,
+          id: idPet,
         },
       });
 
-      return data.map((item) => {
-        const consultas = item.consultsFk.map((itemc) => {
+        const consultas = data.consultsFk.map((itemc) => {
           return {
             id: itemc.id,
             name: itemc.name,
@@ -188,7 +187,7 @@ export class ClientService {
           };
         });
 
-        const servicios = item.serivicePetFk.map((itemc) => {
+        const servicios = data.serivicePetFk.map((itemc) => {
           return {
             id: itemc.id,
             name: itemc.name,
@@ -198,7 +197,7 @@ export class ClientService {
           };
         });
 
-        const examenes = item.examenFk.map((itemc) => {
+        const examenes = data.examenFk.map((itemc) => {
           return {
             id: itemc.id,
             diagnostico: itemc.diagnostico,
@@ -206,14 +205,14 @@ export class ClientService {
             createdAt: itemc.createdAt,
           };
         });
-        const constancias = item.constancyFk.map((itemc) => {
+        const constancias = data.constancyFk.map((itemc) => {
           return {
             id: itemc.id,
             comentario: itemc.comentario,
             createdAt: itemc.createdAt,
           };
         });
-        const reservaciones = item.reservacionFk.map((itemc) => {
+        const reservaciones = data.reservacionFk.map((itemc) => {
           return {
             id: itemc.id,
             horaInicio: itemc.horaInicio,
@@ -225,18 +224,17 @@ export class ClientService {
           };
         });
         return {
-          id: item.id,
-          name: item.name,
-          age: item.age,
-          gender: item.gender,
-          race: item.race,
+          id: data.id,
+          name: data.name,
+          age: data.age,
+          gender: data.gender,
+          race: data.race,
           consultas,
           examenes,
           reservaciones,
           constancias,
           servicios,
         };
-      });
     } catch (error) {
       throw error;
     }
