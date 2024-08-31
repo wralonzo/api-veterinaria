@@ -13,6 +13,7 @@
     "start:local": "export NODE_ENV=local || set NODE_ENV=local && npm run prebuild && nest start --watch ",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
+    "start": "node dist/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "test": "jest",
     "test:watch": "jest --watch",
