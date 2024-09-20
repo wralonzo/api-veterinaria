@@ -1,13 +1,13 @@
 import { Post, Body, UseGuards, Controller } from '@nestjs/common';
 import { JwtAuthGuard } from '../auth/utils/jwt-auth.guard';
 import { CreateMeidcamentoDto } from './dto/create.dto';
-import { MedicamentoService } from './pet.service';
+import { MedicamentoService } from './medicamento.service';
 
 @Controller({
   path: 'medicamento',
   version: '1',
 })
-export class PetController {
+export class MedicamentoController {
   constructor(private readonly petService: MedicamentoService) {}
 
   @UseGuards(JwtAuthGuard)
