@@ -8,7 +8,7 @@ import { CreateMeidcamentoDto } from './dto/create.dto';
 @Injectable()
 export class MedicamentoService {
   constructor(
-    @InjectRepository(Pet)
+    @InjectRepository(Medicamento)
     private readonly repository: Repository<Medicamento>,
   ) {}
   public async create(createPetDto: CreateMeidcamentoDto) {
