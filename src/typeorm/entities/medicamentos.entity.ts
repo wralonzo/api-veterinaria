@@ -27,7 +27,7 @@ export class Medicamento {
   @Column('varchar', { name: 'name', length: 50 })
   name: string;
 
-  @Column('varchar', { name: 'name', length: 100 })
+  @Column('varchar', { name: 'description', length: 100 })
   description: string;
 
   @Column('int', { name: 'id_pet' })
