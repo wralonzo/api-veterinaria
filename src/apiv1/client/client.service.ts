@@ -8,6 +8,7 @@ import { EnumState } from '@/shared/enum/state.enum';
 import { EnumTypeUser } from '@/shared/enum/type-user.enum';
 import { UpdateUserDto } from '../user/dto/update-user.dto';
 import { Pet } from '@/typeorm/entities/pet.entity';
+import { Medicamento } from '@/typeorm/entities/medicamentos.entity';
 
 @Injectable()
 export class ClientService {
@@ -16,6 +17,8 @@ export class ClientService {
     private readonly repository: Repository<Client>,
     @InjectRepository(Pet)
     private readonly repositoryPet: Repository<Pet>,
+    @InjectRepository(Medicamento)
+    private readonly repositortMedicamento: Repository<Medicamento>,
     private readonly serviceUser: UserService,
   ) {}
 
@@ -178,63 +181,81 @@ export class ClientService {
         },
       });
 
-        const consultas = data.consultsFk.map((itemc) => {
-          return {
-            id: itemc.id,
-            name: itemc.name,
-            description: itemc.description,
-            dateCreated: itemc.dateCreated,
-          };
-        });
-
-        const servicios = data.serivicePetFk.map((itemc) => {
-          return {
-            id: itemc.id,
-            name: itemc.name,
-            time: itemc.time,
-            servicio: itemc.serviceFK.name,
-            dateCreated: itemc.dateCreated,
-          };
-        });
-
-        const examenes = data.examenFk.map((itemc) => {
-          return {
-            id: itemc.id,
-            diagnostico: itemc.diagnostico,
-            motivo: itemc.motivo,
-            createdAt: itemc.createdAt,
-          };
-        });
-        const constancias = data.constancyFk.map((itemc) => {
-          return {
-            id: itemc.id,
-            comentario: itemc.comentario,
-            createdAt: itemc.createdAt,
-          };
-        });
-        const reservaciones = data.reservacionFk.map((itemc) => {
-          return {
-            id: itemc.id,
-            horaInicio: itemc.horaInicio,
-            horaFin: itemc.horaFin,
-            fecha: itemc.fecha,
-            comentario: itemc.comentario,
-            estado: itemc.estado,
-            createdAt: itemc.createdAt,
-          };
-        });
+      const consultas = data.consultsFk.map((itemc) => {
         return {
-          id: data.id,
-          name: data.name,
-          age: data.age,
-          gender: data.gender,
-          race: data.race,
-          consultas,
-          examenes,
-          reservaciones,
-          constancias,
-          servicios,
+          id: itemc.id,
+          name: itemc.name,
+          description: itemc.description,
+          dateCreated: itemc.dateCreated,
         };
+      });
+
+      const servicios = data.serivicePetFk.map((itemc) => {
+        return {
+          id: itemc.id,
+          name: itemc.name,
+          time: itemc.time,
+          servicio: itemc.serviceFK.name,
+          dateCreated: itemc.dateCreated,
+        };
+      });
+
+      const examenes = data.examenFk.map((itemc) => {
+        return {
+          id: itemc.id,
+          diagnostico: itemc.diagnostico,
+          motivo: itemc.motivo,
+          createdAt: itemc.createdAt,
+        };
+      });
+      const constancias = data.constancyFk.map((itemc) => {
+        return {
+          id: itemc.id,
+          comentario: itemc.comentario,
+          createdAt: itemc.createdAt,
+        };
+      });
+      const reservaciones = data.reservacionFk.map((itemc) => {
+        return {
+          id: itemc.id,
+          horaInicio: itemc.horaInicio,
+          horaFin: itemc.horaFin,
+          fecha: itemc.fecha,
+          comentario: itemc.comentario,
+          estado: itemc.estado,
+          createdAt: itemc.createdAt,
+        };
+      });
+
+      const medicamentosDB = await this.repositortMedicamento.find({
+        where: {
+          idPet: idPet,
+        },
+      });
+
+      const medicamentos = medicamentosDB.map((itemMed) => {
+        return {
+          id: itemMed.id,
+          name: itemMed.name,
+          description: itemMed.description,
+          createdAt: itemMed.dateCreated,
+          idUser: itemMed.idUser,
+        };
+      });
+
+      return {
+        id: data.id,
+        name: data.name,
+        age: data.age,
+        gender: data.gender,
+        race: data.race,
+        consultas,
+        examenes,
+        reservaciones,
+        constancias,
+        servicios,
+        medicamentos,
+      };
     } catch (error) {
       throw error;
     }
