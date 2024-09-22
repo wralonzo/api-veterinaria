@@ -9,7 +9,6 @@ export class CreateMeidcamentoDto {
 
   @IsNotEmpty()
   @IsString()
-  @Transform((param) => param.value.toUpperCase())
   description: string;
 
   @IsNotEmpty()
